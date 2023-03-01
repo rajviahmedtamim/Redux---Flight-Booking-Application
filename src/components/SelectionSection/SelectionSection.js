@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import frame from "../../assets/img/icons/Frame.svg";
 import vector1 from "../../assets/img/icons/Vector (1).svg";
 import vector3 from "../../assets/img/icons/Vector (3).svg";
@@ -14,20 +13,7 @@ const SelectionSection = () => {
   const [seatClass, setSeatClass] = useState("");
 
   const dispatch = useDispatch();
-  const totalFlights = useSelector((state) => state.flights.length);
-  // console.log(totalFlights);
-
-  totalFlights > 3 &&
-    toast.error("Maximum Number of Flights Added!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
+  const totalFlights = useSelector((state) => state.flights);
 
   const handleFrom = (e) => {
     setFrom(e.target.value);
@@ -167,8 +153,7 @@ const SelectionSection = () => {
             className="addCity"
             type="submit"
             id="lws-addCity"
-            disabled={totalFlights >= 3}
-            // onClick={showToast}
+            disabled={totalFlights.length >= 3}
           >
             <svg
               width="15px"
