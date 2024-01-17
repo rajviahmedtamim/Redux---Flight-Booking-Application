@@ -11,7 +11,6 @@ function App() {
       <Header />
       <section>
         <SelectionSection />
-
         <DisplaySection />
       </section>
     </Provider>

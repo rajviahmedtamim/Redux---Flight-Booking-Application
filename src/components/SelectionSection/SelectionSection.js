@@ -6,51 +6,31 @@ import vector3 from "../../assets/img/icons/Vector (3).svg";
 import { added } from "../../redux/flights/actionCreators";
 
 const SelectionSection = () => {
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
-  const [date, setDate] = useState("");
-  const [guest, setGuest] = useState();
-  const [seatClass, setSeatClass] = useState("");
+  const [formData, setFormData] = useState({
+    from: "",
+    to: "",
+    date: "",
+    guest: "",
+    class: "",
+  });
 
   const dispatch = useDispatch();
   const totalFlights = useSelector((state) => state.flights);
 
-  const handleFrom = (e) => {
-    setFrom(e.target.value);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleTo = (e) => {
-    setTo(e.target.value);
-  };
-
-  const handleDate = (e) => {
-    setDate(e.target.value);
-  };
-
-  const handleGuests = (e) => {
-    setGuest(e.target.value);
-  };
-
-  const handleSeatClass = (e) => {
-    setSeatClass(e.target.value);
-  };
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const flight = {
-      from: from,
-      to: to,
-      date: date,
-      guests: guest,
-      class: seatClass,
-    };
-    dispatch(added(flight));
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(added(formData));
   };
 
   return (
     <div className="mt-[160px] mx-4 md:mt-[160px] relative">
       <div className="bg-white rounded-md max-w-6xl w-full mx-auto">
-        <form className="first-hero lws-inputform" onSubmit={submitHandler}>
+        <form className="first-hero lws-inputform" onSubmit={handleSubmit}>
           <div className="des-from">
             <p>Destination From</p>
             <div className="flex flex-row">
@@ -59,7 +39,7 @@ const SelectionSection = () => {
                 className="outline-none px-2 py-2 w-full"
                 name="from"
                 id="lws-from"
-                onChange={(e) => handleFrom(e)}
+                onChange={(e) => handleChange(e)}
                 required
               >
                 <option value="" hidden>
@@ -79,7 +59,7 @@ const SelectionSection = () => {
               <img src={frame} alt="" />
               <select
                 className="outline-none px-2 py-2 w-full"
-                onChange={(e) => handleTo(e)}
+                onChange={(e) => handleChange(e)}
                 name="to"
                 id="lws-to"
                 required
@@ -102,7 +82,7 @@ const SelectionSection = () => {
               className="outline-none px-2 py-2 w-full date"
               name="date"
               id="lws-date"
-              onChange={(e) => handleDate(e)}
+              onChange={(e) => handleChange(e)}
               required
             />
           </div>
@@ -113,7 +93,7 @@ const SelectionSection = () => {
               <img src={vector1} alt="" />
               <select
                 className="outline-none px-2 py-2 w-full"
-                onChange={(e) => handleGuests(e)}
+                onChange={(e) => handleChange(e)}
                 name="guests"
                 id="lws-guests"
                 required
@@ -135,8 +115,8 @@ const SelectionSection = () => {
               <img src={vector3} alt="" />
               <select
                 className="outline-none px-2 py-2 w-full"
-                onChange={(e) => handleSeatClass(e)}
-                name="ticketClass"
+                onChange={(e) => handleChange(e)}
+                name="class"
                 id="lws-ticketClass"
                 required
               >
